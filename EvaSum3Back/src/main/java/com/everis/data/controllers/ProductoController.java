@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.everis.data.models.Categoria;
 import com.everis.data.models.Producto;
+import com.everis.data.services.CategoriaService;
 import com.everis.data.services.ProductoService;
 
 @Controller
@@ -18,11 +20,18 @@ public class ProductoController {
 	@Autowired
 	ProductoService pService;
 
+	@Autowired
+	CategoriaService cService;
+
 	@RequestMapping("")
 	public String productos(Model model) {
 
 		List<Producto> lista = pService.allProductos();
 		model.addAttribute("productos", lista);
+
+		List<Categoria> lista1 = cService.allCategorias();
+		model.addAttribute("categorias", lista1);
+
 		return "producto.jsp";
 
 	}

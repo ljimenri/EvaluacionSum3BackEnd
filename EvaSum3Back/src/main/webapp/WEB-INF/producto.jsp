@@ -95,8 +95,14 @@
 
 
 			<div class="form-group">
-				<label>Categoría SELECT</label> <input type="text" placeholder="Debe ser un select"
-					class="form-control" name="caracteristica" value="${caracteristica}" required>
+				<label>Categoría</label> 
+				
+				<select name="categoria" class="form-control">
+			<option value="0">Seleccione una categoría</option>
+			<c:forEach var="categoria" items="${categorias}">
+				<option value="<c:out value="${categoria.id}"></c:out>"><c:out value="${categoria.nombre}"></c:out> </option>
+			</c:forEach>
+		</select>
 				
 			</div>
 			
@@ -116,11 +122,6 @@
 			
 			
 
-		</form>
-
-	<form action="/carro-compra" class="btn-group" method="POST">
-					<button type="submit" class="btn btn-warning btn-lg">Ver carro</button>
-		</form>
 		
 	
 		<br>
