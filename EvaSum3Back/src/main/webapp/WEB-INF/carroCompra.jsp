@@ -148,7 +148,7 @@
   </tbody>
 </table>	
 
-<h4 style="textAling: center"> Total ${total} </h4>
+<h4 style="text-align: center;"> Total ${total} </h4>
 	
 	</div>	
 	

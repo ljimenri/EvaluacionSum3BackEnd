@@ -44,7 +44,7 @@ public class Producto {
 		this.caracteristicas = caracteristicas;
 	}
 
-	// RALCIÓN 1 A MUCHOS
+	// RALCIÓN 1 A MUCHOS CON CARRO DE COMPRA
 	@OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
 	private List<CarroCompra> carroCompra;
 

@@ -61,7 +61,7 @@
 		</form>
 
 
-	
+	${mensaje}
 
 		<div class="btn-group" role="group" aria-label="Basic mixed styles example">
 				<form action="/usuario" class="btn-group" method="POST">
