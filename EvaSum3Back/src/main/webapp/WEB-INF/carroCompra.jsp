@@ -31,6 +31,30 @@
 
         <span class="navbar-toggler-icon"></span>
       </button>
+      
+       <div id="navbarSupportedContent" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">  
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/producto">Producto</a>
+          </li>
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/carro-compra">Carro compra</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categoria">Categorias</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categoria">Cerrar Sesión</a>
+          </li>
+
+        
+      </ul>
+ </div>
 
     
     </div>

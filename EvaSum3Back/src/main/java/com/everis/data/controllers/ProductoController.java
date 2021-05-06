@@ -18,7 +18,7 @@ public class ProductoController {
 	@Autowired
 	ProductoService pService;
 
-	@RequestMapping("/")
+	@RequestMapping("")
 	public String productos(Model model) {
 
 		List<Producto> lista = pService.allProductos();

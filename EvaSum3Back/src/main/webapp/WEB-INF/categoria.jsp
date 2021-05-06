@@ -31,8 +31,8 @@
 
         <span class="navbar-toggler-icon"></span>
       </button>
-      
-      
+
+
  <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto">  
         
@@ -57,7 +57,6 @@
       </ul>
  </div>
     
-    
     </div>
   </nav>
 
@@ -65,64 +64,32 @@
 	<div>
 		
 		<div class="container col-md-4" style="margin-top: 50px">
-		<h4 style="text-align: center;">Registro de productos</h4>
+		<h4 style="text-align: center;">Registro de categorías</h4>
 		<br>
-		<form class="px-2" action="/producto/insertar" method="POST">
+		<form class="px-2" action="/categoria/insertar" method="POST">
 
 			<div class="form-group">
-				<label>Nombre producto</label> 
-				<input type="text" placeholder="Ingresa el nombre del producto"
+				<label>Nombre categoría</label> 
+				<input type="text" placeholder="Ingresa la categoria"
 					class="form-control" name="nombre" value="${nombre}" required>
 				
-				<br>
 			</div>
 
-			<div class="form-group">
-				<label>Precio</label> <input type="text" placeholder="Ingresa el precio"
-					class="form-control" name="precio" value="${precio}" required>
-				
-			</div>
 			<br>
-
-
-		<div class="form-group">
-				<label>Caracteristicas</label> <input type="text" placeholder="Ingresa las características"
-					class="form-control" name="caracteristica" value="${caracteristica}" required>
-				
-			</div>
-			<br>
-
-
-
-			<div class="form-group">
-				<label>Categoría SELECT</label> <input type="text" placeholder="Debe ser un select"
-					class="form-control" name="caracteristica" value="${caracteristica}" required>
-				
-			</div>
-			
-			<br>
-
 
 			<div class="container">
 				<div class="row">
 					<div class="btn-group" role="group"
 						aria-label="Basic mixed styles example">
-						<button type="submit" class="btn btn-success">Guardar</button>
+						<button type="submit" class="btn btn-success">Guardar categoria</button>
 					</div>
 				</div>
 			</div>
-			<br>
 			
 			
 			
 
 		</form>
-
-	<form action="/carro-compra" class="btn-group" method="POST">
-					<button type="submit" class="btn btn-warning btn-lg">Ver carro</button>
-		</form>
-		
-	
 		<br>
 		<hr>
 		
@@ -131,26 +98,31 @@
   <thead>
     <tr>
       <th scope="col">Id</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Precio</th>
-      <th scope="col">Descripción</th>
+      <th scope="col">Nombre categoría</th>
       <th scope="col">Acción</th>
     </tr>
   </thead>
   <tbody>
   
   
-    <c:forEach var="producto"  items="${productos}">
+    <c:forEach var="categoria"  items="${categorias}">
 					<tr>
-						<td><c:out value="${producto.id}" /> </td>
-						<td><c:out value="${producto.nombre}" /> </td>
-						<td><c:out value="${producto.precio}" /> </td>
-						<td><c:out value="${producto.caracteristicas}" /> </td>
+						<td><c:out value="${categoria.id}" /> </td>
+						<td><c:out value="${categoria.nombre}" /> </td>
+						
 						
 				<td>			
-    		<Form action="/producto/eliminar?id=${producto.id}"  method="POST">
+    		<Form action="/categoria/eliminar?id=${categoria.id}"  method="POST">
                 <button type="submit" class="btn btn-danger">
                	 Eliminar
+                </button>
+            </Form>
+            
+            
+            <br>
+            <Form action="/categoria/editar?id=${categoria.id}"  method="POST">
+                <button type="submit" class="btn btn-success">
+               	 Modificar
                 </button>
             </Form>
              </td>    
