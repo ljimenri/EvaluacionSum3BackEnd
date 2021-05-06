@@ -134,6 +134,7 @@
       <th scope="col">Id</th>
       <th scope="col">Nombre</th>
       <th scope="col">Precio</th>
+      <th scope="col">Categoria</th>
       <th scope="col">Descripción</th>
       <th scope="col">Acción</th>
     </tr>
@@ -146,6 +147,7 @@
 						<td><c:out value="${producto.id}" /> </td>
 						<td><c:out value="${producto.nombre}" /> </td>
 						<td><c:out value="${producto.precio}" /> </td>
+						<td><c:out value="${producto.categoria.nombre}" /> </td>
 						<td><c:out value="${producto.caracteristicas}" /> </td>
 						
 				<td>			

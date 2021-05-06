@@ -39,16 +39,21 @@ public class ProductoController {
 	@RequestMapping("/insertar")
 	public String guardarProducto(@RequestParam(value = "nombre") String nombre,
 			@RequestParam(value = "precio") String precio,
-			@RequestParam(value = "caracteristica") String caracteristica, Model model) {
+			@RequestParam(value = "caracteristica") String caracteristica,
+			@RequestParam("categoria") Categoria categoria, Model model) {
 
 		Producto producto = new Producto();
 		producto.setNombre(nombre);
 		producto.setPrecio(precio);
 		producto.setCaracteristicas(caracteristica);
+		producto.setCategoria(categoria);
 		producto = pService.guardarProducto(producto);
 
 		List<Producto> lista = pService.allProductos();
 		model.addAttribute("productos", lista);
+
+		List<Categoria> lista1 = cService.allCategorias();
+		model.addAttribute("categorias", lista1);
 
 		return "producto.jsp";
 	}
@@ -59,6 +64,9 @@ public class ProductoController {
 		pService.deleteById(id);
 		List<Producto> lista = pService.allProductos();
 		model.addAttribute("productos", lista);
+
+		List<Categoria> lista1 = cService.allCategorias();
+		model.addAttribute("categorias", lista1);
 		return "producto.jsp";
 
 	}
