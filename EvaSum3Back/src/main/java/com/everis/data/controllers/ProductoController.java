@@ -2,6 +2,8 @@ package com.everis.data.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +26,22 @@ public class ProductoController {
 	CategoriaService cService;
 
 	@RequestMapping("")
-	public String productos(Model model) {
+	public String productos(Model model, HttpSession session) {
 
-		List<Producto> lista = pService.allProductos();
-		model.addAttribute("productos", lista);
+		Integer registrado = (Integer) session.getAttribute("registrado");
 
-		List<Categoria> lista1 = cService.allCategorias();
-		model.addAttribute("categorias", lista1);
+		if (registrado == 1) {
 
-		return "producto.jsp";
+			List<Producto> lista = pService.allProductos();
+			model.addAttribute("productos", lista);
+
+			List<Categoria> lista1 = cService.allCategorias();
+			model.addAttribute("categorias", lista1);
+
+			return "producto.jsp";
+		}
+
+		return "redirect:/error-sesion";
 
 	}
 
@@ -40,35 +49,38 @@ public class ProductoController {
 	public String guardarProducto(@RequestParam(value = "nombre") String nombre,
 			@RequestParam(value = "precio") String precio,
 			@RequestParam(value = "caracteristica") String caracteristica,
-			@RequestParam("categoria") Categoria categoria, Model model) {
+			@RequestParam("categoria") Categoria categoria, Model model, HttpSession session) {
 
-		Producto producto = new Producto();
-		producto.setNombre(nombre);
-		producto.setPrecio(precio);
-		producto.setCaracteristicas(caracteristica);
-		producto.setCategoria(categoria);
-		producto = pService.guardarProducto(producto);
-
-		List<Producto> lista = pService.allProductos();
-		model.addAttribute("productos", lista);
-
-		List<Categoria> lista1 = cService.allCategorias();
-		model.addAttribute("categorias", lista1);
-
-		return "producto.jsp";
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
+			Producto producto = new Producto();
+			producto.setNombre(nombre);
+			producto.setPrecio(precio);
+			producto.setCaracteristicas(caracteristica);
+			producto.setCategoria(categoria);
+			producto = pService.guardarProducto(producto);
+			List<Producto> lista = pService.allProductos();
+			model.addAttribute("productos", lista);
+			List<Categoria> lista1 = cService.allCategorias();
+			model.addAttribute("categorias", lista1);
+			return "producto.jsp";
+		}
+		return "redirect:/error-sesion";
 	}
 
 	@RequestMapping("/eliminar")
-	public String eliminar(@RequestParam(value = "id") Long id, Model model) {
+	public String eliminar(@RequestParam(value = "id") Long id, Model model, HttpSession session) {
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
+			pService.deleteById(id);
+			List<Producto> lista = pService.allProductos();
+			model.addAttribute("productos", lista);
 
-		pService.deleteById(id);
-		List<Producto> lista = pService.allProductos();
-		model.addAttribute("productos", lista);
-
-		List<Categoria> lista1 = cService.allCategorias();
-		model.addAttribute("categorias", lista1);
-		return "producto.jsp";
-
+			List<Categoria> lista1 = cService.allCategorias();
+			model.addAttribute("categorias", lista1);
+			return "producto.jsp";
+		}
+		return "redirect:/error-sesion";
 	}
 
 }

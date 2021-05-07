@@ -28,52 +28,32 @@ public class UsuarioController {
 			@RequestParam("clave") String clave) {
 		Usuario usuario = new Usuario();
 		usuario.setNombreCompleto(nombreCompleto);
-
 		usuario.setCorreo(correo);
 		usuario.setClave(clave);
-
 		uService.save(usuario);
-
 		return "index.jsp";
 	}
 
 	@RequestMapping("/login")
 	public String login(@RequestParam("correo") String correo, @RequestParam("clave") String clave, HttpSession session,
 			Model model) {
-
-		System.out.println(correo);
-		System.out.println(clave);
-
 		if (uService.autenticacion(correo, clave)) {
 			session.setAttribute("correo", correo);
 			session.setAttribute("registrado", 1);
-			System.out.println("ENCONTRADO");
 			return "redirect:/producto";
 		} else {
-			System.out.println(" NOOOOOOOOOO ENCONTRADO");
 			session.removeAttribute("registrado");
 			session.setAttribute("registrado", 0);
-			model.addAttribute("mensaje", "Datos erroneos");
 			return "redirect:/";
 
 		}
 
-		/*
-		 * Usuario usuario = new Usuario();
-		 * 
-		 * List<Usuario> usuarios = uService.findAll();
-		 * 
-		 * boolean usuarioEncontrado = false; for (int i = 0; i < usuarios.size(); i++)
-		 * {
-		 * 
-		 * if (correo.equals(usuarios.get(i).getCorreo())) { usuarioEncontrado = true; }
-		 * 
-		 * }
-		 * 
-		 * if (usuarioEncontrado) {
-		 * 
-		 * return "redirect:/producto/"; }
-		 */
+	}
+
+	@RequestMapping("/log-aout")
+	public String logout(HttpSession session) {
+		session.setAttribute("registrado", 0);
+		return "redirect:/";
 
 	}
 

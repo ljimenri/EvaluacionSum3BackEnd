@@ -49,7 +49,7 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="/categoria">Cerrar Sesión</a>
+            <a class="nav-link" href="/usuario/log-aout">Cerrar Sesión</a>
           </li>
 
         

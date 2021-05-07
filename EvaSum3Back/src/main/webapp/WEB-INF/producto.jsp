@@ -49,8 +49,8 @@
             <a class="nav-link" href="/categoria">Categorias</a>
           </li>
           
-          <li class="nav-item">
-            <a class="nav-link" href="/categoria">Cerrar Sesión</a>
+         <li class="nav-item">
+            <a class="nav-link" href="/usuario/log-aout">Cerrar Sesión</a>
           </li>
 
         

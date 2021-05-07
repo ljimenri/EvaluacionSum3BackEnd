@@ -36,10 +36,6 @@ public class UsuarioService {
 
 	public boolean autenticacion(String correo, String clave) {
 
-		System.out.println("---SERVICE---");
-		System.out.println(correo);
-		System.out.println(clave);
-		// este da nullo
 		Usuario usuario = uRepository.findByCorreo(correo);
 
 		// System.out.println(usuario.getNombreCompleto());

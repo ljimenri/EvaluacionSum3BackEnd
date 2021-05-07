@@ -3,6 +3,7 @@ package com.everis.data.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,83 +29,91 @@ public class CarroCompraController {
 	ProductoService pService;
 
 	@RequestMapping("")
-	public String inicioCarroCompra(Model model) {
+	public String inicioCarroCompra(Model model, HttpSession session) {
 
-		List<CarroCompra> lista_carro = ccService.allCarroCompra();
-		model.addAttribute("carrocompras", lista_carro);
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
 
-		/*
-		 * int sum = 0; for (int i = 0; i < lista_carro.size(); i++) { sum = sum +
-		 * Integer.parseInt(lista_carro.get(i).getProducto().getPrecio())
-		 * Integer.parseInt(lista_carro.get(i).getCantidad()); }
-		 * model.addAttribute("total", sum);
-		 */
-		List<Producto> lista = pService.allProductos();
-		model.addAttribute("productos", lista);
+			List<CarroCompra> lista_carro = ccService.allCarroCompra();
+			model.addAttribute("carrocompras", lista_carro);
 
-		return "carroCompra.jsp";
+			List<Producto> lista = pService.allProductos();
+			model.addAttribute("productos", lista);
+
+			return "carroCompra.jsp";
+
+		}
+		return "redirect:/error-sesion";
+
 	}
 
 	@RequestMapping("/insertar")
 	public String insertarCarroCompra(@RequestParam("cantidad") String cantidad,
-			@RequestParam("producto") Producto producto, Model model) {
+			@RequestParam("producto") Producto producto, Model model, HttpSession session) {
 
-		CarroCompra carrocompra = new CarroCompra();
-		carrocompra.setCantidad(cantidad);
-		carrocompra.setProducto(producto);
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
 
-		carrocompra = ccService.save(carrocompra);
+			CarroCompra carrocompra = new CarroCompra();
+			carrocompra.setCantidad(cantidad);
+			carrocompra.setProducto(producto);
 
-		List<CarroCompra> lista_carro = ccService.allCarroCompra();
-		model.addAttribute("carrocompras", lista_carro);
+			carrocompra = ccService.save(carrocompra);
 
-		int sum = 0;
-		for (int i = 0; i < lista_carro.size(); i++) {
-			sum = sum + Integer.parseInt(lista_carro.get(i).getProducto().getPrecio())
-					* Integer.parseInt(lista_carro.get(i).getCantidad());
+			List<CarroCompra> lista_carro = ccService.allCarroCompra();
+			model.addAttribute("carrocompras", lista_carro);
+
+			int sum = 0;
+			for (int i = 0; i < lista_carro.size(); i++) {
+				sum = sum + Integer.parseInt(lista_carro.get(i).getProducto().getPrecio())
+						* Integer.parseInt(lista_carro.get(i).getCantidad());
+			}
+			model.addAttribute("total", sum);
+			List<Producto> lista = pService.allProductos();
+			model.addAttribute("productos", lista);
+			return "carroCompra.jsp";
 		}
-		model.addAttribute("total", sum);
-		System.out.println(sum);
-
-		List<Producto> lista = pService.allProductos();
-		model.addAttribute("productos", lista);
-
-		return "carroCompra.jsp";
+		return "redirect:/error-sesion";
 	}
 
 	@RequestMapping("/eliminar")
-	public String eliminarCarroCompra(@RequestParam(value = "id") Long id, Model model) {
-
-		ccService.deleteById(id);
-
-		List<CarroCompra> lista_carro = ccService.allCarroCompra();
-		model.addAttribute("carrocompras", lista_carro);
-
-		return "redirect:/carro-compra";
-
+	public String eliminarCarroCompra(@RequestParam(value = "id") Long id, Model model, HttpSession session) {
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
+			ccService.deleteById(id);
+			List<CarroCompra> lista_carro = ccService.allCarroCompra();
+			model.addAttribute("carrocompras", lista_carro);
+			return "redirect:/carro-compra";
+		}
+		return "redirect:/error-sesion";
 	}
 
 	@RequestMapping("/editar")
-	public String editarCarroCompra(@RequestParam("id") Long id, Model model) {
-		Optional<CarroCompra> carrocompra = ccService.findById(id);
-		model.addAttribute("carrito", carrocompra);
+	public String editarCarroCompra(@RequestParam("id") Long id, Model model, HttpSession session) {
 
-		// ---------
-		List<Producto> lista = pService.allProductos();
-		model.addAttribute("productos", lista);
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
 
-		return "editar.jsp";
+			Optional<CarroCompra> carrocompra = ccService.findById(id);
+			model.addAttribute("carrito", carrocompra);
+			List<Producto> lista = pService.allProductos();
+			model.addAttribute("productos", lista);
+			return "editar.jsp";
+		}
+		return "redirect:/error-sesion";
 	}
 
-	// @RequestParam("id") Long id, @RequestParam("cantidad") String cantidad
 	@RequestMapping("/actualizar")
-	public String actualizarCarro(@Valid @ModelAttribute("carrito") CarroCompra carrito) {
+	public String actualizarCarro(@Valid @ModelAttribute("carrito") CarroCompra carrito, HttpSession session) {
 
-		Optional<CarroCompra> carro1 = ccService.findById(carrito.getId());
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
+			Optional<CarroCompra> carro1 = ccService.findById(carrito.getId());
+			ccService.actualizarCarroCompra(carrito);
+			return "redirect:/carro-compra";
 
-		// System.out.println(carrito.getProducto().getNombre());
-		ccService.actualizarCarroCompra(carrito);
-		return "redirect:/carro-compra";
+		}
+		return "redirect:/error-sesion";
 	}
 
 }
