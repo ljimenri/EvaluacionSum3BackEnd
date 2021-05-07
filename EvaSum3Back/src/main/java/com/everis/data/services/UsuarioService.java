@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.everis.data.models.Usuario;
+
 import com.everis.data.repositories.UsuarioRepository;
 
 @Service
@@ -15,16 +16,50 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository uRepository;
 
-	public Usuario save(Usuario usuario) {
+	//@Autowired
+	//RolRepository rolRepository;
 
-		System.out.println("---SERVICE---");
+	public Usuario save(Usuario usuario) {
+		
+		/*
+
+		Long cantidad = uRepository.count();
+		if(cantidad>0) {
+			this.saveUser(usuario);
+		}else {
+			this.saveAdmin(usuario);
+		}
+		System.out.println(cantidad);
+		
+		return usuario; 
+		*/
+		
+
 		System.out.println(usuario.getCorreo());
 		System.out.println(usuario.getClave());
 		String hashed = BCrypt.hashpw(usuario.getClave(), BCrypt.gensalt());
 		System.out.println("clave hashed " + hashed);
 		usuario.setClave(hashed);
 		return uRepository.save(usuario);
+		
 	}
+	
+	/*
+
+	public Usuario saveAdmin(Usuario usuario) {
+		String hashed = BCrypt.hashpw(usuario.getClave(), BCrypt.gensalt());
+		usuario.setClave(hashed);
+		usuario.setRoles(rolRepository.findByNombre("ROL_ADMIN"));
+		return uRepository.save(usuario);
+	}
+
+	public Usuario saveUser(Usuario usuario) {
+		String hashed = BCrypt.hashpw(usuario.getClave(), BCrypt.gensalt());
+		usuario.setClave(hashed);
+		usuario.setRoles(rolRepository.findByNombre("ROL_USER"));
+		return uRepository.save(usuario);
+	}
+	*/
 
 	public List<Usuario> findAll() {
 		return (List<Usuario>) uRepository.findAll();

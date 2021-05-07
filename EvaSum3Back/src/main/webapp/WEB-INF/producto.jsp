@@ -170,6 +170,14 @@
                	 Eliminar
                 </button>
             </Form>
+            
+            
+            
+            <Form action="/producto/editar?id=${producto.id}"  method="POST" style="margin-top: 10px">
+                <button type="submit" class="btn btn-success">
+               	 Modificar
+                </button>
+            </Form>
              </td>    
 						
 					</tr>

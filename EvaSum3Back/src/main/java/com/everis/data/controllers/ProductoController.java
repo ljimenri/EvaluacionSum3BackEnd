@@ -1,12 +1,15 @@
 package com.everis.data.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -80,6 +83,33 @@ public class ProductoController {
 			model.addAttribute("categorias", lista1);
 			return "producto.jsp";
 		}
+		return "redirect:/error-sesion";
+	}
+
+	@RequestMapping("/editar")
+	public String editar(@RequestParam("id") Long id, Model model, HttpSession session) {
+
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
+
+			Optional<Producto> producto = pService.findById(id);
+			model.addAttribute("producto", producto);
+			return "editarProducto.jsp";
+		}
+
+		return "redirect:/error-sesion";
+	}
+
+	@RequestMapping("/actualizar")
+	public String actualizarCancion(@Valid @ModelAttribute("producto") Producto producto, HttpSession session) {
+
+		Integer registrado = (Integer) session.getAttribute("registrado");
+		if (registrado == 1) {
+			Optional<Producto> producto1 = pService.findById(producto.getId());
+			pService.actualizarProducto(producto);
+			return "redirect:/producto";
+		}
+
 		return "redirect:/error-sesion";
 	}
 

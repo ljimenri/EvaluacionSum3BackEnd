@@ -61,12 +61,14 @@
 		</form>
 
 
-	${mensaje}
-
-		<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
 				<form action="/usuario" class="btn-group" method="POST">
 					<button type="submit" class="btn btn-warning btn-lg">registrar</button>
 				</form>
+		</div>
+		</div>
 		</div>
 
 </body>

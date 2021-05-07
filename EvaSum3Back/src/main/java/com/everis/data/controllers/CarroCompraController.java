@@ -89,7 +89,8 @@ public class CarroCompraController {
 			model.addAttribute("total", sum);
 			List<Producto> lista = pService.allProductos();
 			model.addAttribute("productos", lista);
-			return "carroCompra.jsp";
+
+			return "redirect:/carro-compra";
 		}
 		return "redirect:/error-sesion";
 	}

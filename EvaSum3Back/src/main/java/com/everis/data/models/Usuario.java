@@ -1,12 +1,17 @@
 package com.everis.data.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -37,8 +42,26 @@ public class Usuario {
 		this.clave = clave;
 	}
 
+	/*
+	@ManyToMany(fetch = FetchType.LAZY)
+	
+	@JoinTable(name = "usuarios_roles", // plural
+			joinColumns = @JoinColumn(name = "usuario_id"), // singular
+			inverseJoinColumns = @JoinColumn(name = "rol_id")// singular
+	)
+	
+	private List<Rol> roles;
+
 	// GETTERS AND SETTERS
 
+	public List<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
+*/
 	public Long getId() {
 		return id;
 	}

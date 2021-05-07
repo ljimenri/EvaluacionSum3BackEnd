@@ -120,6 +120,7 @@ public class CategoriaController {
 
 	@RequestMapping("/buscar-categoria")
 	public String buscarCategoria(Model model, HttpSession session, @RequestParam("categoria") String categoria) {
+
 		Integer registrado = (Integer) session.getAttribute("registrado");
 		if (registrado == 1) {
 
@@ -132,19 +133,20 @@ public class CategoriaController {
 			List<Producto> filtro_productos = new ArrayList();
 
 			for (int i = 0; i < productos.size(); i++) {
-				if (productos.get(i).getCategoria().getNombre().equals(categoria)) {
-					filtro_productos.add(productos.get(i));
+
+				if (productos.get(i).getCategoria() != null) {
+
+					if (productos.get(i).getCategoria().getNombre().equals(categoria)) {
+						filtro_productos.add(productos.get(i));
+					}
 				}
-			}
-
-			for (int i = 0; i < filtro_productos.size(); i++) {
-				System.out.println(filtro_productos.get(i).getNombre());
-
 			}
 
 			model.addAttribute("productos", filtro_productos);
 			return "buscarCategoria.jsp";
+
 		}
+
 		return "redirect:/error-sesion";
 	}
 

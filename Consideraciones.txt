@@ -1,0 +1,4 @@
+1)Para poder agregar un producto, previamente se debe registrar una o muchas categorías.
+2)Para probar las funcionalidades de eliminar, procurar que el dato a borrar no coincida con el
+ingresado primero porque se crashea. 
+3)Para buscar productos por categoria deben existir productos previamente
