@@ -40,6 +40,13 @@ public class CarroCompraController {
 			List<Producto> lista = pService.allProductos();
 			model.addAttribute("productos", lista);
 
+			int sum = 0;
+			for (int i = 0; i < lista_carro.size(); i++) {
+				sum = sum + Integer.parseInt(lista_carro.get(i).getProducto().getPrecio())
+						* Integer.parseInt(lista_carro.get(i).getCantidad());
+			}
+			model.addAttribute("total", sum);
+
 			return "carroCompra.jsp";
 
 		}
@@ -104,12 +111,20 @@ public class CarroCompraController {
 	}
 
 	@RequestMapping("/actualizar")
-	public String actualizarCarro(@Valid @ModelAttribute("carrito") CarroCompra carrito, HttpSession session) {
+	public String actualizarCarro(@Valid @ModelAttribute("carrito") CarroCompra carrito, HttpSession session,
+			Model model) {
 
 		Integer registrado = (Integer) session.getAttribute("registrado");
 		if (registrado == 1) {
-			System.out.println(carrito.getId());
-			System.out.println(carrito.getCantidad());
+			List<CarroCompra> lista_carro = ccService.allCarroCompra();
+			model.addAttribute("carrocompras", lista_carro);
+
+			int sum = 0;
+			for (int i = 0; i < lista_carro.size(); i++) {
+				sum = sum + Integer.parseInt(lista_carro.get(i).getProducto().getPrecio())
+						* Integer.parseInt(lista_carro.get(i).getCantidad());
+			}
+			model.addAttribute("total", sum);
 
 			ccService.ActualizaCarro(carrito.getCantidad(), carrito.getId());
 			return "redirect:/carro-compra";
