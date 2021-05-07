@@ -31,8 +31,9 @@
 
         <span class="navbar-toggler-icon"></span>
       </button>
-      
-       <div id="navbarSupportedContent" class="collapse navbar-collapse">
+
+
+ <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto">  
         
         <li class="nav-item">
@@ -59,108 +60,79 @@
         
       </ul>
  </div>
-
     
     </div>
   </nav>
 
 </header>
-	
-	<div class="container col-md-4" style="margin-top: 50px">
-		<h4 style="text-align: center;">Selecciona un producto para agregarlo a tu carro</h4>
+	<div>
 		
-		
-	<form action="/carro-compra/insertar" method="post" class="px-2">
-	
-		
-		<div class="form-group">
-		<label for="producto">Producto: </label>
-		<select name="producto" class="form-control">
-			<option value="0">Seleccione un producto...</option>
-			<c:forEach var="producto" items="${productos}">
-				<option value="<c:out value="${producto.id}"></c:out>"><c:out value="${producto.nombre}"></c:out> </option>
+		<div class="container col-md-4" style="margin-top: 50px">
+		<h4 style="text-align: center;">Selecciona la categoría a buscar</h4>
+		<br>
+		<form class="px-2" action="/categoria/buscar-categoria" method="POST">
+
+			
+				<div class="form-group">
+				
+				
+				<select name="categoria" class="form-control">
+			<option value="0">Seleccione una categoría</option>
+			<c:forEach var="categoria" items="${categorias}">
+				<option value="<c:out value="${categoria.nombre}"></c:out>"><c:out value="${categoria.nombre}"></c:out> </option>
 			</c:forEach>
 		</select>
 		
-		</div>
-		
-		
-		<div class="form-group">
-				<label>Cantidad</label> <input type="text" placeholder="Ingresa la cantidad"
-					class="form-control" name="cantidad" value="${cantidad}" required>
-				
-			</div>
-			<br>
-		<br>
-		<div class="container">
+		<div class="container" style="margin-top: 20px">
 				<div class="row">
 					<div class="btn-group" role="group"
 						aria-label="Basic mixed styles example">
-						<button type="submit" class="btn btn-success">Agregar producto</button>
+						<button type="submit" class="btn btn-success">Buscar</button>
 					</div>
 				</div>
 			</div>
+				
+		</form>
+		</div>
 		
-		<!--<input type="submit" value="Agregar producto">-->
-	</form>
-	
-
-	
-	
+		
+			<br>
+		<br>
+		<hr>
+		
 	
 	<table class="table">
   <thead>
     <tr>
       <th scope="col">Id</th>
       <th scope="col">Nombre</th>
-      <th scope="col">Precio unitario</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col">Acción</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Descripción</th>
+     
     </tr>
   </thead>
   <tbody>
   
   
-    <c:forEach var="carrocompra"  items="${carrocompras.content}">
+    <c:forEach var="producto"  items="${productos}">
 					<tr>
-						<td><c:out value="${carrocompra.id}" /> </td>
-						<td><c:out value="${carrocompra.producto.nombre}" /> </td>
-						<td><c:out value="${carrocompra.producto.precio}" /> </td>
-						<td><c:out value="${carrocompra.cantidad}" /> </td>
+						<td><c:out value="${producto.id}" /> </td>
+						<td><c:out value="${producto.nombre}" /> </td>
+						<td><c:out value="${producto.precio}" /> </td>
+						<td><c:out value="${producto.categoria.nombre}" /> </td>
+						<td><c:out value="${producto.caracteristicas}" /> </td>
 						
-			<td>			
-	    		<Form action="/carro-compra/eliminar?id=${carrocompra.id}"  method="POST">
-	                <button type="submit" class="btn btn-danger">
-	               	 Eliminar
-	                </button>
-	            </Form>
-             </td>    
-             
-             
-             <td>			
-	    		<Form action="/carro-compra/editar?id=${carrocompra.id}"  method="POST">
-	                <button type="submit" class="btn btn-success">
-	               	 Modificar
-	                </button>
-	            </Form>
-             </td>    
-						
+				
 					</tr>
 	</c:forEach>
    
   
   </tbody>
-</table>
-
-<h4 style="text-align: center;"> Total ${total} </h4>
-
-<c:forEach begin="1" end="${totalPagina}" var="index">
-			<a href="/carro-compra/paginacion/${index}">pagina : ${index}</a>
-		</c:forEach>	
-
-
-	
-	</div>	
+</table>	
+		
+		
+	</div>
 	
 	
 	 <footer class="bg-light text-center text-lg-start">

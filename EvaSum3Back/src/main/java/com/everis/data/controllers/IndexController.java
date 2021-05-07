@@ -24,4 +24,5 @@ public class IndexController {
 	public String errorSesion() {
 		return "errorSesion.jsp";
 	}
+
 }

@@ -49,6 +49,12 @@
             <a class="nav-link" href="/categoria">Categorias</a>
           </li>
           
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categoria/buscar">Buscar por categoria</a>
+          </li>
+          
          <li class="nav-item">
             <a class="nav-link" href="/usuario/log-aout">Cerrar Sesión</a>
           </li>
@@ -103,13 +109,9 @@
 				<option value="<c:out value="${categoria.id}"></c:out>"><c:out value="${categoria.nombre}"></c:out> </option>
 			</c:forEach>
 		</select>
-				
-			</div>
-			
-			<br>
-
-
-			<div class="container">
+		
+		
+		<div class="container" style="margin-top: 20px">
 				<div class="row">
 					<div class="btn-group" role="group"
 						aria-label="Basic mixed styles example">
@@ -118,6 +120,18 @@
 				</div>
 			</div>
 			<br>
+			
+			
+			
+			
+			
+				</form>	
+			</div>
+			
+			<br>
+
+
+			
 			
 			
 			

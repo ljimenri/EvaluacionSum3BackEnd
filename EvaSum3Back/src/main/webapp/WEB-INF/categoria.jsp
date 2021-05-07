@@ -50,6 +50,10 @@
           </li>
           
           <li class="nav-item">
+            <a class="nav-link" href="/categoria/buscar">Buscar por categoria</a>
+          </li>
+          
+          <li class="nav-item">
             <a class="nav-link" href="/usuario/log-aout">Cerrar Sesión</a>
           </li>
 
