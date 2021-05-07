@@ -117,7 +117,7 @@
   <tbody>
   
   
-    <c:forEach var="carrocompra"  items="${carrocompras}">
+    <c:forEach var="carrocompra"  items="${carrocompras.content}">
 					<tr>
 						<td><c:out value="${carrocompra.id}" /> </td>
 						<td><c:out value="${carrocompra.producto.nombre}" /> </td>
@@ -146,9 +146,15 @@
    
   
   </tbody>
-</table>	
+</table>
 
 <h4 style="text-align: center;"> Total ${total} </h4>
+
+<c:forEach begin="1" end="${totalPagina}" var="index">
+			<a href="/carro-compra/paginacion/${index}">pagina : ${index}</a>
+		</c:forEach>	
+
+
 	
 	</div>	
 	

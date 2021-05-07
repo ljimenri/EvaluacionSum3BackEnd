@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.everis.data.models.CarroCompra;
@@ -41,6 +43,13 @@ public class CarroCompraService {
 
 	public void ActualizaCarro(String cantidad, Long id) {
 		ccRepository.ActualizarProductoCarro(cantidad, id);
+	}
+
+	public Page<CarroCompra> productosPaginados(int numeroPagina, int cantElementos) {
+
+		PageRequest pageRequest = PageRequest.of(numeroPagina, cantElementos);
+
+		return ccRepository.findAll(pageRequest);
 	}
 
 }

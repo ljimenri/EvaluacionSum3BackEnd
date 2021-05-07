@@ -7,9 +7,11 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,17 +30,26 @@ public class CarroCompraController {
 	@Autowired
 	ProductoService pService;
 
+	private static final int CANT_PRODUCTOS = 2;
+
 	@RequestMapping("")
 	public String inicioCarroCompra(Model model, HttpSession session) {
 
 		Integer registrado = (Integer) session.getAttribute("registrado");
 		if (registrado == 1) {
 
-			List<CarroCompra> lista_carro = ccService.allCarroCompra();
-			model.addAttribute("carrocompras", lista_carro);
+			// DATOS DE LA PAGINACIÓN
+			Page<CarroCompra> carroCompra = ccService.productosPaginados(0, CANT_PRODUCTOS);
+			int totalPagina = carroCompra.getTotalPages();
+			model.addAttribute("totalPagina", totalPagina);
+			model.addAttribute("carrocompras", carroCompra);
 
+			// DATOS DEL SELECT
 			List<Producto> lista = pService.allProductos();
 			model.addAttribute("productos", lista);
+
+			// DATOS PARA SUMAR LOS VALORES DEL CARRO
+			List<CarroCompra> lista_carro = ccService.allCarroCompra();
 
 			int sum = 0;
 			for (int i = 0; i < lista_carro.size(); i++) {
@@ -131,6 +142,32 @@ public class CarroCompraController {
 
 		}
 		return "redirect:/error-sesion";
+	}
+
+	@RequestMapping("/paginacion/{numeroPagina}")
+	public String getProductosPagina(@PathVariable("numeroPagina") int numeroPagina, Model model) {
+
+		// DATOS DEL SELECT
+		List<Producto> lista = pService.allProductos();
+		model.addAttribute("productos", lista);
+
+		// DATOS PARA SUMAR LOS VALORES DEL CARRO
+		List<CarroCompra> lista_carro = ccService.allCarroCompra();
+
+		int sum = 0;
+		for (int i = 0; i < lista_carro.size(); i++) {
+			sum = sum + Integer.parseInt(lista_carro.get(i).getProducto().getPrecio())
+					* Integer.parseInt(lista_carro.get(i).getCantidad());
+		}
+		model.addAttribute("total", sum);
+
+		// DATOS DE LA PAGINACIÓN
+		Page<CarroCompra> carroCompra = ccService.productosPaginados(numeroPagina - 1, CANT_PRODUCTOS);
+		int totalPagina = carroCompra.getTotalPages();
+		model.addAttribute("totalPagina", totalPagina);
+		model.addAttribute("carrocompras", carroCompra);
+
+		return "carroCompra.jsp";
 	}
 
 }
