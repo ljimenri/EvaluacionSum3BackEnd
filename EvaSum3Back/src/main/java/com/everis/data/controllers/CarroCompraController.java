@@ -108,8 +108,10 @@ public class CarroCompraController {
 
 		Integer registrado = (Integer) session.getAttribute("registrado");
 		if (registrado == 1) {
-			Optional<CarroCompra> carro1 = ccService.findById(carrito.getId());
-			ccService.actualizarCarroCompra(carrito);
+			System.out.println(carrito.getId());
+			System.out.println(carrito.getCantidad());
+
+			ccService.ActualizaCarro(carrito.getCantidad(), carrito.getId());
 			return "redirect:/carro-compra";
 
 		}

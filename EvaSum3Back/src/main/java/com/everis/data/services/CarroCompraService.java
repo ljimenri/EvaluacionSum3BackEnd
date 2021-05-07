@@ -39,4 +39,8 @@ public class CarroCompraService {
 
 	}
 
+	public void ActualizaCarro(String cantidad, Long id) {
+		ccRepository.ActualizarProductoCarro(cantidad, id);
+	}
+
 }
